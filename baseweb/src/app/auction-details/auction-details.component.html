@@ -1,0 +1,117 @@
+
+
+<div *ngFor="let book of books">
+  <div *ngIf="correctId(book)">
+    <p>Asta del libro:</p> <h2><b>{{book.title}}</b></h2>
+
+    <div *ngIf="us.is_logged()">
+    <div *ngIf="us.is_moderator()">
+      <input type="text" class="form-control-sm" 
+       style="width:10em" 
+        [(ngModel)]="book.title"
+       (keyup.enter)="update_book(book)"/>
+       &nbsp; 
+       <button type="submit" (click)="update_book(book)" class="btn">
+         Modifica
+     </button>
+   </div>
+  </div>
+
+    <p>Offerta attuale: <b>{{ book.startprice | currency: 'EUR' }}</b></p>
+    <p>Scadenza: <b>{{book.auctiondeadline | date}} / {{book.auctiondeadline | date:'shortTime'}}</b></p>
+
+    <div *ngIf="us.is_logged()">
+    <div *ngIf="us.is_moderator()">
+      <input type="datetime-local" class="form-control-sm" 
+       style="width:10em" 
+        [(ngModel)]="book.auctiondeadline"
+       (keyup.enter)="update_book(book)"/>
+       &nbsp; 
+       <button type="submit" (click)="update_book(book)" class="btn">
+        Modifica
+     </button>
+   </div>
+  </div>
+
+    <p>Università: <b>{{book.university}}</b> | Corso: <b>{{book.course}}</b></p>
+
+    <div *ngIf="us.is_logged()">
+    <div *ngIf="us.is_moderator()">
+      <input type="text" class="form-control-sm" 
+       style="width:10em" 
+        [(ngModel)]="book.university"
+       (keyup.enter)="update_book(book)"/>
+       &nbsp; 
+       <button type="submit" (click)="update_book(book)" class="btn">
+         Modifica
+     </button>
+   </div>
+  </div>
+
+   <div *ngIf="us.is_logged()">
+   <div *ngIf="us.is_moderator()">
+    <input type="text" class="form-control-sm" 
+     style="width:10em" 
+      [(ngModel)]="book.course"
+     (keyup.enter)="update_book(book)"/>
+     &nbsp; 
+     <button type="submit" (click)="update_book(book)" class="btn">
+      Modifica
+   </button>
+ </div>
+</div>
+
+    <p>Zona: <b>{{book.zone}}</b></p>
+
+    <div *ngIf="us.is_logged()">
+    <div *ngIf="us.is_moderator()">
+      <input type="text" class="form-control-sm" 
+       style="width:10em" 
+        [(ngModel)]="book.zone"
+       (keyup.enter)="update_book(book)"/>
+       &nbsp; 
+       <button type="submit" (click)="update_book(book)" class="btn">
+        Modifica
+     </button>
+   </div>
+  </div>
+
+    <p>Venditore: {{book.seller}}</p>
+
+    <div *ngIf="us.is_logged()">
+      <div *ngIf="is_notExpired(book.auctiondeadline)">
+      <div *ngIf="im_theSeller(book)">
+        <input type="number" class="form-control-sm" 
+         style="width:5em" 
+          [(ngModel)]="price"
+         (keyup.enter)="update_price(book)"/>
+         &nbsp; 
+         <button type="submit" (click)="update_price(book)" class="btn">
+           Rilancia
+       </button>
+     </div>
+    </div>
+
+     &nbsp; 
+     <div *ngIf="us.is_moderator()">
+          <p>Winner: {{book.winner}}</p>
+          <button class="btn btn-danger" (click)="delete_user(book.seller)">Elimina utente</button>
+        
+      </div>
+      &nbsp;
+      <div *ngFor="let user of userDialog">
+        ciao
+      </div>
+        <button (click)="mex_OnetoOne(book, us.get_mail())">Messaggia privatamente col venditore</button>
+      
+    <!--div *ngIf="messaggi_privati()">
+
+
+    </div-->
+      &nbsp;
+      <app-message-list (posted)="get_privMessages(book._id)" ></app-message-list>
+    </div>
+
+  </div>
+</div>
+

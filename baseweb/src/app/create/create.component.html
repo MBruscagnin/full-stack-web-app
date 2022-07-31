@@ -1,0 +1,76 @@
+<div class="container" >
+
+    <form class="form-signin"  >
+      
+      <div class="text-center">  
+        <i class="fas fa-envelope loginlogo"></i>
+        <h1 class="h3 mb-3 font-weight-normal">Crea un'asta</h1>
+      </div>
+    
+      <ng-container *ngIf="!us.is_logged()">
+
+        <p> Devi <b><a routerLink="/login">loggarti</a></b> per poter creare un'asta.
+        </p>
+      </ng-container>
+
+     <ng-container *ngIf="us.is_logged()">
+    
+      <div class="form-group">
+        <label for="inputTitle">Titolo</label>
+        <input type="text" 
+        [(ngModel)]="book.title" name="title"
+        class="form-control" required id="inputTitle"  placeholder="Inserisci il titolo">
+      </div>
+
+      <div class="form-group">
+        <label for="inputUni">Università</label>
+        <input type="text" 
+        [(ngModel)]="book.university" name="uni"
+        class="form-control" required id="inputUni"  placeholder="Inserisci l'Università">
+      </div>
+
+      <div class="form-group">
+        <label for="inputCourse">Corso</label>
+        <input type="text" 
+        [(ngModel)]="book.course" name="course"
+        class="form-control" required id="inputCourse"  placeholder="Inserisci il Corso">
+      </div>
+
+      <div class="form-group">
+        <label for="inputScad">Scadenza</label>
+        <input type="datetime-local" 
+        [(ngModel)]="book.auctiondeadline" name="scad"
+        class="form-control" required id="inputScad"  placeholder="Inserisci la Scadenza">
+      </div>
+
+      <div class="form-group">
+        <label for="inputPrice">Prezzo di partenza</label>
+        <input type="number" 
+        [(ngModel)]="book.startprice" name="price"
+        class="form-control" required id="inputPrice"  placeholder="Inserisci il Prezzo di partenza">
+      </div>
+
+      <div class="form-group">
+        <label for="inputReserve">Prezzo di riserva</label>
+        <input type="number" 
+        [(ngModel)]="book.reserveprice" name="reserve"
+        class="form-control" required id="inputReserve"  placeholder="Inserisci il prezzo di riserva">
+      </div>
+
+      <div class="form-group">
+        <label for="inputZone">Zona</label>
+        <input type="text" 
+        [(ngModel)]="book.zone" name="zone"
+        class="form-control" required id="inputZone"  placeholder="Inserisci la zona">
+      </div>
+       
+      <div *ngIf="errmessage" class="alert alert-danger" role="alert">
+        Login error: {{errmessage}}
+      </div>
+      <br>
+      <button class="btn btn-lg btn-primary btn-block" (click)="post_book();" >Crea</button>
+    </ng-container>
+  
+    </form>
+    </div>
+    <br>

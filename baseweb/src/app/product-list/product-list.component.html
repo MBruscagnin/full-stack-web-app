@@ -1,0 +1,105 @@
+
+<h5>Cerca per università</h5>
+<ng-container *ngFor="let book of books">
+
+  <ng-container *ngIf="is_notExpired(book.auctiondeadline)">
+   
+    <button (click)="get_booksByUni(book.university)">
+        {{book.university}} 
+      </button>
+
+ 
+  &nbsp;
+  &nbsp;
+</ng-container>
+</ng-container>
+
+<h5>Cerca per corso</h5>
+<ng-container *ngFor="let book of books">
+  <ng-container *ngIf="is_notExpired(book.auctiondeadline)">
+  <button (click)="get_booksByCourse(book.course)">
+    {{book.course}}
+  </button>
+  &nbsp;
+</ng-container>
+</ng-container>
+
+
+<h5>Cerca per area geografica Venditore</h5>
+
+<ng-container *ngFor="let book of books">
+  <ng-container *ngIf="is_notExpired(book.auctiondeadline)">
+  <button (click)="get_booksByZone(book.zone)">
+    {{book.zone}}
+  </button>
+  &nbsp;
+</ng-container>
+</ng-container>
+
+<h5>Annulla filtri</h5>
+<ng-container>
+  <button name="Mostra tutte le aste attive" (click)="get_books()">
+    Mostra tutte le aste attive
+  </button>
+  &nbsp;
+</ng-container>
+
+<!--[class.active]="book == book.university"-->
+<hr>
+<h2>Aste di libri attive</h2>
+
+<div *ngFor="let book of books"> 
+  <ng-container *ngIf="is_notExpired(book.auctiondeadline)">
+  <h3>
+    <a [title]="book.title + ' dettagli'" [routerLink]="['/books/'+book._id]">
+      {{ book.title}} 
+    </a>
+    <br>
+
+      <!--<label for="messagetext">Message</label>
+      <textarea class="form-control" [(ngModel)]="price" #messagetx id="messagetext" 
+      rows="1" (keyup.enter)="update_price()" placeholder="Enter your message here"></textarea-->
+  
+  </h3>
+  
+    Offerta attuale: <b>{{ book.startprice | currency:"EUR" }}</b><br><br>
+    Scadenza asta: <b>{{book.auctiondeadline | date}} / {{book.auctiondeadline | date:'shortTime'}}</b>
+  
+  <p>
+    Università: <b>{{book.university}}</b> | Corso: <b>{{book.course}}</b>
+  
+  </p>
+  <p>Zona: <b>{{book.zone}}</b></p>
+
+</ng-container>
+</div>
+
+ <!-- 
+
+<div *ngFor="let product of products; index as productId">
+
+  <h3>
+    <a [title]="product.name + ' details'" [routerLink]="['/products', productId]">
+      {{ product.name }}
+    </a>
+  </h3>
+
+  <p *ngIf="product.description">
+    Description: {{ product.description }}
+  </p>
+
+
+  <button (click)="share()">
+  Share
+</button>
+<app-product-alerts
+  [product]="product" 
+  (notify)="onNotify()">
+</app-product-alerts>
+</div>
+
+<!-- 
+Copyright Google LLC. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->

@@ -1,0 +1,26 @@
+<a [routerLink]="['/']">
+  <h1>Auctions
+  </h1>
+</a>
+
+<ng-container *ngIf="!us.is_logged()">
+  <a routerLink="/login" class="button fancy-button">
+    <i class="material-icons">login</i>Login
+  </a>
+  </ng-container>
+
+
+<ng-container *ngIf="us.is_logged()">
+<a *ngIf="!us.is_moderator()" routerLink="/private" class="button fancy-button">
+  <i class="material-icons">admin_panel_settings</i>area riservata
+</a>
+<a *ngIf="us.is_moderator()" routerLink="/mod" class="button fancy-button">
+  <i class="material-icons">admin_panel_settings</i>area moderatori
+</a>
+</ng-container>
+
+<!-- 
+Copyright Google LLC. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->

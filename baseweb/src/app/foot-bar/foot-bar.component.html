@@ -1,0 +1,25 @@
+<ng-container *ngIf="us.is_logged()">
+ <a routerLink="/" class="button fancy-button" (click)="logout()">
+    <i class="material-icons">login</i>Logout
+  </a>
+  <a *ngIf="us.is_moderator()" routerLink="/signup" class="button fancy-button">
+    <i class="material-icons">admin_panel_settings</i>Aggiungi moderatori
+  </a>
+</ng-container>
+
+<ng-container *ngIf="!us.is_logged()">
+<a routerLink="/login" class="button fancy-button">
+  <i class="material-icons">login</i>Login
+</a>
+</ng-container>
+
+<ng-container *ngIf="!us.is_logged()">
+  <a routerLink="/signup" class="button fancy-button">
+    <i class="material-icons">login</i>Signup
+  </a>
+</ng-container>
+<ng-container *ngIf="us.is_logged()">
+  <a *ngIf="!us.is_moderator()" routerLink="/create" class="button fancy-button">
+    <i class="material-icons">book</i>Crea inserzione
+  </a>
+  </ng-container>

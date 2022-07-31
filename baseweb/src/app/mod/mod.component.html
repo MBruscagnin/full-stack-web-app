@@ -1,0 +1,48 @@
+<h2>Area moderatori</h2>
+
+<ng-container *ngIf="!us.is_logged()">
+
+   <p> Devi <b><a routerLink="/login">loggarti</a></b> per accedere all'area riservata.
+   </p>
+
+</ng-container>
+
+<div *ngIf="us.is_logged()">
+
+    <p>Utente: <b>{{us.get_username()}}</b></p>
+    <p>Mail: <b>{{us.get_mail()}}</b></p>
+    <h3>Aste attive</h3>
+
+    <ng-container *ngFor="let book of books">
+
+            <p *ngIf="is_Expired(book.auctiondeadline)"> Titolo:  <a [routerLink]="['/books/'+book._id]">{{book.title}}</a>
+            </p>
+
+    </ng-container>
+    <h3>Aste concluse senza successo</h3>
+
+    <ng-container *ngFor="let book of books">
+
+            <ng-container *ngIf="!is_Expired(book.auctiondeadline)">
+              Titolo:  <a [routerLink]="['/books/'+book._id]">{{book.title}}</a>  
+              <br />  
+            </ng-container>
+  
+    </ng-container>
+       
+        &nbsp;
+
+    <h3>Aste concluse con successo</h3>
+
+        <ng-container *ngFor="let book of books">
+    
+                <ng-container *ngIf="is_Expired(book.auctiondeadline)">
+                    <ng-container *ngIf="winner(book)">
+                        <p>Titolo:  <a [routerLink]="['/books/'+book._id]">{{book.title}}</a> Vinta da: <b> {{book.winner}}</b></p>
+                    </ng-container>
+                   
+                </ng-container>
+            
+        </ng-container>
+
+</div>

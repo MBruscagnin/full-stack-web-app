@@ -1,0 +1,79 @@
+<h2>Area riservata</h2>
+
+<ng-container *ngIf="!us.is_logged()">
+
+   <p> Devi <b><a routerLink="/login">loggarti</a></b> per accedere all'area riservata.
+   </p>
+
+</ng-container>
+
+<div *ngIf="us.is_logged()">
+
+    <p>Utente: <b>{{us.get_username()}}</b></p>
+    <p>Mail: <b>{{us.get_mail()}}</b></p>
+    <h3>Aste rilanciate</h3>
+
+    <ng-container *ngFor="let book of books">
+
+        <div *ngIf="im_interested(book)">  
+            <p>Libro desiderato:  <a [routerLink]="['/books/'+book._id]">{{book.title}}</a>
+                <ng-container *ngIf="!is_notExpired(book.auctiondeadline)">
+                    <ng-container *ngIf="you_win(book)">
+                        <a [routerLink]="['/']"> <b>VINTA</b></a>
+                     </ng-container>
+                     <ng-container *ngIf="!you_win(book)">
+                    <b> PERSA</b>
+                </ng-container>
+                </ng-container>
+            </p>
+            
+        </div>
+
+        <ng-container *ngIf="you_win(book.winner)">
+           <a [routerLink]="['/']"> <b>HAI VINTO!!!</b></a>
+        </ng-container>
+
+    </ng-container>
+    <h3>Aste pubblicate</h3>
+
+    <ng-container *ngFor="let book of books">
+        <div *ngIf="!im_theSeller(book)">
+
+            <h4><a [routerLink]="['/books/'+book._id]">{{book.title}}</a> 
+                <ng-container *ngIf="!is_notExpired(book.auctiondeadline)">
+                <b> - *TERMINATA*</b>
+            </ng-container>
+        </h4> 
+            <p>Prezzo di riserva: {{book.reserveprice}}</p>
+            <p>Offerta attuale: {{book.startprice}}</p>
+            
+            
+            <p>Scadenza asta: {{book.auctiondeadline | date}} 
+                / {{book.auctiondeadline | date:'shortTime'}}</p>
+
+            
+
+            <ng-container *ngIf="is_notExpired(book.auctiondeadline)">
+                Attuale offerente: {{book.winner}}
+            </ng-container>
+
+            <ng-container *ngIf="!is_notExpired(book.auctiondeadline)">
+                <ng-container *ngIf="winner(book)">
+                    Vincitore: 
+                </ng-container>
+                <ng-container *ngIf="!winner(book)">
+                    Ultimo offerente (non si aggiudica l'asta): 
+                </ng-container> 
+
+                {{book.winner}}
+            </ng-container>
+
+        </div>
+        
+
+    </ng-container>
+
+    <ng-container *ngIf=im_aSeller()>
+        <p>Non hai ancora venduto un libro.</p>
+    </ng-container>
+</div>
